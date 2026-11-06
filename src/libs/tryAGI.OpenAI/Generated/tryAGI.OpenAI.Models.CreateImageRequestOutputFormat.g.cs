@@ -11,11 +11,19 @@ namespace tryAGI.OpenAI
         /// <summary>
         ///
         /// </summary>
+        Gif,
+        /// <summary>
+        ///
+        /// </summary>
         Jpeg,
         /// <summary>
         ///
         /// </summary>
         Png,
+        /// <summary>
+        ///
+        /// </summary>
+        Svg,
         /// <summary>
         ///
         /// </summary>
@@ -34,8 +42,10 @@ namespace tryAGI.OpenAI
         {
             return value switch
             {
+                CreateImageRequestOutputFormat.Gif => "gif",
                 CreateImageRequestOutputFormat.Jpeg => "jpeg",
                 CreateImageRequestOutputFormat.Png => "png",
+                CreateImageRequestOutputFormat.Svg => "svg",
                 CreateImageRequestOutputFormat.Webp => "webp",
                 _ => throw new global::System.ArgumentOutOfRangeException(nameof(value), value, null),
             };
@@ -47,8 +57,10 @@ namespace tryAGI.OpenAI
         {
             return value switch
             {
+                "gif" => CreateImageRequestOutputFormat.Gif,
                 "jpeg" => CreateImageRequestOutputFormat.Jpeg,
                 "png" => CreateImageRequestOutputFormat.Png,
+                "svg" => CreateImageRequestOutputFormat.Svg,
                 "webp" => CreateImageRequestOutputFormat.Webp,
                 _ => null,
             };

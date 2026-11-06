@@ -11,6 +11,10 @@ namespace tryAGI.OpenAI
         /// <summary>
         ///
         /// </summary>
+        Gif,
+        /// <summary>
+        ///
+        /// </summary>
         Jpeg,
         /// <summary>
         ///
@@ -34,6 +38,7 @@ namespace tryAGI.OpenAI
         {
             return value switch
             {
+                EditImageBodyJsonParamOutputFormat.Gif => "gif",
                 EditImageBodyJsonParamOutputFormat.Jpeg => "jpeg",
                 EditImageBodyJsonParamOutputFormat.Png => "png",
                 EditImageBodyJsonParamOutputFormat.Webp => "webp",
@@ -47,6 +52,7 @@ namespace tryAGI.OpenAI
         {
             return value switch
             {
+                "gif" => EditImageBodyJsonParamOutputFormat.Gif,
                 "jpeg" => EditImageBodyJsonParamOutputFormat.Jpeg,
                 "png" => EditImageBodyJsonParamOutputFormat.Png,
                 "webp" => EditImageBodyJsonParamOutputFormat.Webp,

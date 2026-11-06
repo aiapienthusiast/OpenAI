@@ -9,6 +9,13 @@ namespace tryAGI.OpenAI
     public sealed partial class CreateAgentSessionParams
     {
         /// <summary>
+        /// Action review mode. Omit to use none.
+        /// </summary>
+        [global::System.Text.Json.Serialization.JsonPropertyName("review")]
+        [global::System.Text.Json.Serialization.JsonConverter(typeof(global::tryAGI.OpenAI.JsonConverters.SessionReviewParamJsonConverter))]
+        public global::tryAGI.OpenAI.SessionReviewParam? Review { get; set; }
+
+        /// <summary>
         /// Up to 16 string key-value pairs, with keys up to 64 and values up to 512 characters. Omission or null defaults to an empty map.
         /// </summary>
         [global::System.Text.Json.Serialization.JsonPropertyName("metadata")]
@@ -54,6 +61,12 @@ namespace tryAGI.OpenAI
         public bool? Stream { get; set; }
 
         /// <summary>
+        /// Options for the event stream. Only allowed when `stream` is `true`.
+        /// </summary>
+        [global::System.Text.Json.Serialization.JsonPropertyName("stream_options")]
+        public global::tryAGI.OpenAI.SessionStreamOptionsParam? StreamOptions { get; set; }
+
+        /// <summary>
         /// Additional properties that are not explicitly defined in the schema
         /// </summary>
         [global::System.Text.Json.Serialization.JsonExtensionData]
@@ -64,6 +77,9 @@ namespace tryAGI.OpenAI
         /// </summary>
         /// <param name="environment">
         /// An inline execution environment or a reference to an environment template.
+        /// </param>
+        /// <param name="review">
+        /// Action review mode. Omit to use none.
         /// </param>
         /// <param name="metadata">
         /// Up to 16 string key-value pairs, with keys up to 64 and values up to 512 characters. Omission or null defaults to an empty map.
@@ -84,18 +100,24 @@ namespace tryAGI.OpenAI
         /// Whether to stream session events as server-sent events. Defaults to `false`.<br/>
         /// Default Value: false
         /// </param>
+        /// <param name="streamOptions">
+        /// Options for the event stream. Only allowed when `stream` is `true`.
+        /// </param>
 #if NET7_0_OR_GREATER
         [global::System.Diagnostics.CodeAnalysis.SetsRequiredMembers]
 #endif
         public CreateAgentSessionParams(
             global::tryAGI.OpenAI.EnvironmentParam environment,
+            global::tryAGI.OpenAI.SessionReviewParam? review,
             global::System.Collections.Generic.Dictionary<string, string>? metadata,
             global::tryAGI.OpenAI.SessionAgentConfigParam? agent,
             string? agentId,
             global::System.Collections.Generic.IList<string>? vaultIds,
             global::tryAGI.OpenAI.CreateSessionInputParam? input,
-            bool? stream)
+            bool? stream,
+            global::tryAGI.OpenAI.SessionStreamOptionsParam? streamOptions)
         {
+            this.Review = review;
             this.Metadata = metadata;
             this.Agent = agent;
             this.AgentId = agentId;
@@ -103,6 +125,7 @@ namespace tryAGI.OpenAI
             this.VaultIds = vaultIds;
             this.Input = input;
             this.Stream = stream;
+            this.StreamOptions = streamOptions;
         }
 
         /// <summary>

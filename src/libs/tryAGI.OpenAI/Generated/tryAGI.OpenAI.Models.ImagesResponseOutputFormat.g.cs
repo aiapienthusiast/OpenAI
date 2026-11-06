@@ -4,10 +4,14 @@
 namespace tryAGI.OpenAI
 {
     /// <summary>
-    /// The output format of the image generation. Either `png`, `webp`, or `jpeg`.
+    /// The output format of the generated image.
     /// </summary>
     public enum ImagesResponseOutputFormat
     {
+        /// <summary>
+        ///
+        /// </summary>
+        Gif,
         /// <summary>
         ///
         /// </summary>
@@ -16,6 +20,10 @@ namespace tryAGI.OpenAI
         ///
         /// </summary>
         Png,
+        /// <summary>
+        ///
+        /// </summary>
+        Svg,
         /// <summary>
         ///
         /// </summary>
@@ -34,8 +42,10 @@ namespace tryAGI.OpenAI
         {
             return value switch
             {
+                ImagesResponseOutputFormat.Gif => "gif",
                 ImagesResponseOutputFormat.Jpeg => "jpeg",
                 ImagesResponseOutputFormat.Png => "png",
+                ImagesResponseOutputFormat.Svg => "svg",
                 ImagesResponseOutputFormat.Webp => "webp",
                 _ => throw new global::System.ArgumentOutOfRangeException(nameof(value), value, null),
             };
@@ -47,8 +57,10 @@ namespace tryAGI.OpenAI
         {
             return value switch
             {
+                "gif" => ImagesResponseOutputFormat.Gif,
                 "jpeg" => ImagesResponseOutputFormat.Jpeg,
                 "png" => ImagesResponseOutputFormat.Png,
+                "svg" => ImagesResponseOutputFormat.Svg,
                 "webp" => ImagesResponseOutputFormat.Webp,
                 _ => null,
             };

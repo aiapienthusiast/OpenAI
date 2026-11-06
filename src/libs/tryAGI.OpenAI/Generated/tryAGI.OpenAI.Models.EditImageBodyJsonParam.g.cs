@@ -14,10 +14,30 @@ namespace tryAGI.OpenAI
     public sealed partial class EditImageBodyJsonParam
     {
         /// <summary>
+        /// Number of frames for GIF output. Accepts integers from 2 through 16. Defaults to 9 when omitted. Only supported with output_format=gif. The requested size must satisfy the selected model's GIF size limits. GIF output does not support streaming, partial images, masks, or custom output compression. Requires access to the GIF preview for the selected model.
+        /// </summary>
+        [global::System.Text.Json.Serialization.JsonPropertyName("frame_count")]
+        public int? FrameCount { get; set; }
+
+        /// <summary>
+        /// Requested delay per GIF frame, in milliseconds. Defaults to 200 when omitted. GIF output rounds to the nearest 10 ms and caps the encoded delay at 655,350 ms per frame. Only supported with output_format=gif.
+        /// </summary>
+        [global::System.Text.Json.Serialization.JsonPropertyName("frame_duration_ms")]
+        public int? FrameDurationMs { get; set; }
+
+        /// <summary>
+        /// Computation spent planning the image, independently of rendering quality. Uses the image model's configured default when omitted. For SVG output, controls the reference image, independently of the SVG author's reasoning.
+        /// </summary>
+        [global::System.Text.Json.Serialization.JsonPropertyName("complexity")]
+        [global::System.Text.Json.Serialization.JsonConverter(typeof(global::tryAGI.OpenAI.JsonConverters.ComplexityJsonConverter))]
+        public global::tryAGI.OpenAI.Complexity? Complexity { get; set; }
+
+        /// <summary>
         /// The GPT image model to use for image editing, including `gpt-image-2`, its dated<br/>
         /// snapshot `gpt-image-2-2026-04-21`, `gpt-image-2.5-sunburst`,<br/>
-        /// `gpt-image-2.5-sunburst-2026-09-08`, `gpt-image-2.5-flare`, and<br/>
-        /// `gpt-image-2.5-flare-2026-09-08`. Defaults to `gpt-image-2.5-sunburst`.<br/>
+        /// `gpt-image-2.5-sunburst-2026-09-08`, `gpt-image-2.5-flare`,<br/>
+        /// `gpt-image-2.5-flare-2026-09-08`, `gpt-image-2.6-sunburst`, and `gpt-image-2.6-flare`.<br/>
+        /// Defaults to `gpt-image-2.5-sunburst`.<br/>
         /// `gpt-image-1` was shut down on October 23, 2026. Use<br/>
         /// `gpt-image-2.5-sunburst` or `gpt-image-2.5-flare` instead.<br/>
         /// Default Value: gpt-image-2.5-sunburst<br/>
@@ -42,6 +62,12 @@ namespace tryAGI.OpenAI
         /// </summary>
         [global::System.Text.Json.Serialization.JsonPropertyName("mask")]
         public global::tryAGI.OpenAI.ImageRefParam? Mask { get; set; }
+
+        /// <summary>
+        /// A transparent PNG overlaid on the first image, referenced by file ID, HTTPS URL, or base64 data URL. Must match that image's dimensions after orientation and contain transparent pixels. Supports GPT Image 2.5. Cannot be combined with mask.
+        /// </summary>
+        [global::System.Text.Json.Serialization.JsonPropertyName("markup")]
+        public global::tryAGI.OpenAI.ImageRefParam? Markup { get; set; }
 
         /// <summary>
         /// A text description of the desired image edit.<br/>
@@ -172,11 +198,21 @@ namespace tryAGI.OpenAI
         /// A text description of the desired image edit.<br/>
         /// Example: Add a watercolor effect and keep the subject centered
         /// </param>
+        /// <param name="frameCount">
+        /// Number of frames for GIF output. Accepts integers from 2 through 16. Defaults to 9 when omitted. Only supported with output_format=gif. The requested size must satisfy the selected model's GIF size limits. GIF output does not support streaming, partial images, masks, or custom output compression. Requires access to the GIF preview for the selected model.
+        /// </param>
+        /// <param name="frameDurationMs">
+        /// Requested delay per GIF frame, in milliseconds. Defaults to 200 when omitted. GIF output rounds to the nearest 10 ms and caps the encoded delay at 655,350 ms per frame. Only supported with output_format=gif.
+        /// </param>
+        /// <param name="complexity">
+        /// Computation spent planning the image, independently of rendering quality. Uses the image model's configured default when omitted. For SVG output, controls the reference image, independently of the SVG author's reasoning.
+        /// </param>
         /// <param name="model">
         /// The GPT image model to use for image editing, including `gpt-image-2`, its dated<br/>
         /// snapshot `gpt-image-2-2026-04-21`, `gpt-image-2.5-sunburst`,<br/>
-        /// `gpt-image-2.5-sunburst-2026-09-08`, `gpt-image-2.5-flare`, and<br/>
-        /// `gpt-image-2.5-flare-2026-09-08`. Defaults to `gpt-image-2.5-sunburst`.<br/>
+        /// `gpt-image-2.5-sunburst-2026-09-08`, `gpt-image-2.5-flare`,<br/>
+        /// `gpt-image-2.5-flare-2026-09-08`, `gpt-image-2.6-sunburst`, and `gpt-image-2.6-flare`.<br/>
+        /// Defaults to `gpt-image-2.5-sunburst`.<br/>
         /// `gpt-image-1` was shut down on October 23, 2026. Use<br/>
         /// `gpt-image-2.5-sunburst` or `gpt-image-2.5-flare` instead.<br/>
         /// Default Value: gpt-image-2.5-sunburst<br/>
@@ -185,6 +221,9 @@ namespace tryAGI.OpenAI
         /// <param name="mask">
         /// Reference an input image by either URL or uploaded file ID.<br/>
         /// Provide exactly one of `image_url` or `file_id`.
+        /// </param>
+        /// <param name="markup">
+        /// A transparent PNG overlaid on the first image, referenced by file ID, HTTPS URL, or base64 data URL. Must match that image's dimensions after orientation and contain transparent pixels. Supports GPT Image 2.5. Cannot be combined with mask.
         /// </param>
         /// <param name="n">
         /// The number of edited images to generate.<br/>
@@ -241,8 +280,12 @@ namespace tryAGI.OpenAI
         public EditImageBodyJsonParam(
             global::System.Collections.Generic.IList<global::tryAGI.OpenAI.ImageRefParam> images,
             string prompt,
+            int? frameCount,
+            int? frameDurationMs,
+            global::tryAGI.OpenAI.Complexity? complexity,
             global::tryAGI.OpenAI.AnyOf<string, global::tryAGI.OpenAI.EditImageBodyJsonParamModel?>? model,
             global::tryAGI.OpenAI.ImageRefParam? mask,
+            global::tryAGI.OpenAI.ImageRefParam? markup,
             int? n,
             global::tryAGI.OpenAI.EditImageBodyJsonParamQuality? quality,
             global::tryAGI.OpenAI.EditImageBodyJsonParamInputFidelity? inputFidelity,
@@ -255,9 +298,13 @@ namespace tryAGI.OpenAI
             bool? stream,
             int? partialImages)
         {
+            this.FrameCount = frameCount;
+            this.FrameDurationMs = frameDurationMs;
+            this.Complexity = complexity;
             this.Model = model;
             this.Images = images ?? throw new global::System.ArgumentNullException(nameof(images));
             this.Mask = mask;
+            this.Markup = markup;
             this.Prompt = prompt ?? throw new global::System.ArgumentNullException(nameof(prompt));
             this.N = n;
             this.Quality = quality;

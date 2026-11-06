@@ -56,6 +56,7 @@ namespace tryAGI.OpenAI
 
             request = new global::tryAGI.OpenAI.CreateAgentSessionParams
             {
+                Review = request.Review,
                 Metadata = request.Metadata,
                 Agent = request.Agent,
                 AgentId = request.AgentId,
@@ -63,6 +64,7 @@ namespace tryAGI.OpenAI
                 VaultIds = request.VaultIds,
                 Input = request.Input,
                 Stream = true,
+                StreamOptions = request.StreamOptions,
             };
             PrepareArguments(
                 client: HttpClient);
@@ -396,6 +398,9 @@ namespace tryAGI.OpenAI
         /// Create an agent session<br/>
         /// Creates a managed agent session, optionally submits initial input, and returns the session or streams its events when stream is true. See [running sessions](https://developers.openai.com/api/docs/guides/agents-api/sessions).
         /// </summary>
+        /// <param name="review">
+        /// Action review mode. Omit to use none.
+        /// </param>
         /// <param name="metadata">
         /// Up to 16 string key-value pairs, with keys up to 64 and values up to 512 characters. Omission or null defaults to an empty map.
         /// </param>
@@ -414,21 +419,27 @@ namespace tryAGI.OpenAI
         /// <param name="input">
         /// Initial input to submit when the session is created. A string is shorthand for a single user message. Required when `environment.type` is `none`, or when `stream` is `true` for an environment that is not `self_hosted`; optional for self-hosted and non-streaming execution environments.
         /// </param>
+        /// <param name="streamOptions">
+        /// Options for the event stream. Only allowed when `stream` is `true`.
+        /// </param>
         /// <param name="requestOptions">Per-request overrides such as headers, query parameters, timeout, retries, and response buffering.</param>
         /// <param name="cancellationToken">The token to cancel the operation with</param>
         /// <exception cref="global::System.InvalidOperationException"></exception>
         public async global::System.Collections.Generic.IAsyncEnumerable<global::tryAGI.OpenAI.SessionEvent> CreateAgentSessionAsStreamAsync(
             global::tryAGI.OpenAI.EnvironmentParam environment,
+            global::tryAGI.OpenAI.SessionReviewParam? review = default,
             global::System.Collections.Generic.Dictionary<string, string>? metadata = default,
             global::tryAGI.OpenAI.SessionAgentConfigParam? agent = default,
             string? agentId = default,
             global::System.Collections.Generic.IList<string>? vaultIds = default,
             global::tryAGI.OpenAI.CreateSessionInputParam? input = default,
+            global::tryAGI.OpenAI.SessionStreamOptionsParam? streamOptions = default,
             global::tryAGI.OpenAI.AutoSDKRequestOptions? requestOptions = default,
             [global::System.Runtime.CompilerServices.EnumeratorCancellation] global::System.Threading.CancellationToken cancellationToken = default)
         {
             var __request = new global::tryAGI.OpenAI.CreateAgentSessionParams
             {
+                Review = review,
                 Metadata = metadata,
                 Agent = agent,
                 AgentId = agentId,
@@ -436,6 +447,7 @@ namespace tryAGI.OpenAI
                 VaultIds = vaultIds,
                 Input = input,
                 Stream = true,
+                StreamOptions = streamOptions,
             };
 
             var __enumerable = CreateAgentSessionAsStreamAsync(

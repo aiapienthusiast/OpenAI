@@ -9,6 +9,12 @@ namespace tryAGI.OpenAI
     public sealed partial class ImagesResponse
     {
         /// <summary>
+        /// Token usage for the model that authored the SVG, separate from image rendering usage.
+        /// </summary>
+        [global::System.Text.Json.Serialization.JsonPropertyName("svg_usage")]
+        public global::tryAGI.OpenAI.ImagesResponseSvgUsage? SvgUsage { get; set; }
+
+        /// <summary>
         /// The effective safety identifier used for safety monitoring and abuse detection. This is the non-empty `safety_identifier` from the request, or the deprecated `user` value when `safety_identifier` is omitted, null, or empty.
         /// </summary>
         [global::System.Text.Json.Serialization.JsonPropertyName("safety_identifier")]
@@ -35,7 +41,7 @@ namespace tryAGI.OpenAI
         public global::tryAGI.OpenAI.ImagesResponseBackground? Background { get; set; }
 
         /// <summary>
-        /// The output format of the image generation. Either `png`, `webp`, or `jpeg`.
+        /// The output format of the generated image.
         /// </summary>
         [global::System.Text.Json.Serialization.JsonPropertyName("output_format")]
         [global::System.Text.Json.Serialization.JsonConverter(typeof(global::tryAGI.OpenAI.JsonConverters.ImagesResponseOutputFormatJsonConverter))]
@@ -73,6 +79,9 @@ namespace tryAGI.OpenAI
         /// <param name="created">
         /// The Unix timestamp (in seconds) of when the image was created.
         /// </param>
+        /// <param name="svgUsage">
+        /// Token usage for the model that authored the SVG, separate from image rendering usage.
+        /// </param>
         /// <param name="safetyIdentifier">
         /// The effective safety identifier used for safety monitoring and abuse detection. This is the non-empty `safety_identifier` from the request, or the deprecated `user` value when `safety_identifier` is omitted, null, or empty.
         /// </param>
@@ -83,7 +92,7 @@ namespace tryAGI.OpenAI
         /// The background parameter used for the image generation. Either `transparent` or `opaque`.
         /// </param>
         /// <param name="outputFormat">
-        /// The output format of the image generation. Either `png`, `webp`, or `jpeg`.
+        /// The output format of the generated image.
         /// </param>
         /// <param name="size">
         /// The image dimensions as a `WIDTHxHEIGHT` string, for example `1536x864`.
@@ -99,6 +108,7 @@ namespace tryAGI.OpenAI
 #endif
         public ImagesResponse(
             int created,
+            global::tryAGI.OpenAI.ImagesResponseSvgUsage? svgUsage,
             string? safetyIdentifier,
             global::System.Collections.Generic.IList<global::tryAGI.OpenAI.Image2>? data,
             global::tryAGI.OpenAI.ImagesResponseBackground? background,
@@ -107,6 +117,7 @@ namespace tryAGI.OpenAI
             global::tryAGI.OpenAI.ImagesResponseQuality? quality,
             global::tryAGI.OpenAI.ImageGenUsage? usage)
         {
+            this.SvgUsage = svgUsage;
             this.SafetyIdentifier = safetyIdentifier;
             this.Created = created;
             this.Data = data;
